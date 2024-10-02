@@ -27,7 +27,8 @@ defmodule Tornex.MixProject do
       {:jason, "~> 1.4"},
       {:hackney, "~> 1.20"},
       {:telemetry, "~> 1.3"},
-      {:prom_ex, "~> 1.10", optional: true}
+      {:prom_ex, "~> 1.10", optional: true},
+      {:ex_doc, "~> 0.34", only: :dev, runtime: false}
     ]
   end
 

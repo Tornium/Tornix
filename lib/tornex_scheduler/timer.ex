@@ -13,10 +13,18 @@
 # limitations under the License.
 
 defmodule Tornex.Scheduler.Timer do
+  @moduledoc """
+  Timer used to determine when to dump all of the buckets, see `Tornex.Scheduler.Bucket`.
+
+  By default, the bucket will be dumped every 6 seconds to allow for a maximum call rate of 
+  60 API requests per minute. Upon the dump timer ending, the GenServer will send a `:dump` signal to 
+  all GenServers under `Tornex.Scheduler.Supervisor`.
+  """
+
   use GenServer
 
   # 15 seconds
-  @timer_interval 15_000
+  @timer_interval 6_000
 
   # Public API
   def start_link(_) do
@@ -47,6 +55,7 @@ defmodule Tornex.Scheduler.Timer do
   end
 
   def handle_info(:dump, state) do
+    # Fake handle to prevent errors when `handle_info(:dump_signal, _)`sends the signal to this GenServer too
     {:noreply, state}
   end
 end

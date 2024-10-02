@@ -31,7 +31,7 @@ defmodule Tornex.PromExPlugin do
             measurement: :latency,
             description: "The time it takes for the Torn API to respond to API calls.",
             reporter_options: [
-              buckets: [0, 100, 250, 500, 1_000, 2_500, 5_000, 10_000],
+              buckets: [0, 100, 250, 500, 1_000, 2_500, 5_000, 10_000]
             ],
             unit: {:native, :microsecond}
           ),
