@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# TODO: Remove all unused HTTP methods from `Tornex.API`
+# TODO: Remove all unused methods and types originating in `Tesla` from `Tornex.API`
 
 defmodule Tornex.API do
   use Tesla

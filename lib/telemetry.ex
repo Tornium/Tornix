@@ -13,11 +13,23 @@
 # limitations under the License.
 
 defmodule Tornex.Telemetry do
+  @moduledoc """
+  Telemetry for Tornex
+
+  `Tornex.Telemetry` defaults to using `Logger` to handle telemetry events but this can be 
+  customized by not attaching the default logger.
+  """
+
+  # TODO: Document the individual events
+
   require Logger
 
   @handler_id "tornex-default-telemetry-handler"
 
-  @spec attach_default_logger() :: :ok | {:error, :already_exists}
+  @doc """
+  Attach the default built-in log handler to Tornex Telemetry
+  """
+  @spec attach_default_logger(opts :: Keyword) :: :ok | {:error, :already_exists}
   def attach_default_logger(opts \\ []) when is_list(opts) do
     events = [
       [:tornex, :api, :start],
@@ -37,11 +49,13 @@ defmodule Tornex.Telemetry do
     :telemetry.attach_many(@handler_id, events, &__MODULE__.handle_event/4, opts)
   end
 
+  @doc false
   @spec detach_default_logger() :: :ok | {:error, :not_found}
   def detach_default_logger() do
     :telemetry.detach(@handler_id)
   end
 
+  @doc false
   def handle_event([:tornex, :api, :start], _measurements, metadata, _opts) do
     Logger.debug(
       "[#{metadata.resource}/#{metadata.resource_id || ""}?selections=#{Enum.join(metadata.selections || [], ",")}] Request started for #{metadata.user}"

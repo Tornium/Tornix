@@ -13,7 +13,21 @@
 # limitations under the License.
 
 defmodule Tornex.Query do
+  @moduledoc """
+  Struct container for Torn API queries.
+
+  `Query` is used to provide query data to the URL builder within `Tornex.API.torn_get/1`.
+
+  ## Nice
+  The `nice` key/value in `Query` follows how the nice value in the Linux scheduler works. 
+  -20 is the highest priority request while 20 is the lowest priority request. Additionally,
+  [-20, -10] is considered to be a user-originating request and is the highest priority, (-10, 0] 
+  is considered to be a high priority request but an automated request, (0, 20] is considered 
+  to be a low priority, automated request (as seen in `query_priority/1`).
+  """
+
   # TODO: Define required keys
+
   @type t :: %__MODULE__{
           resource: String.t(),
           resource_id: Integer | String.t(),
@@ -47,6 +61,9 @@ defmodule Tornex.Query do
     :origin
   ]
 
+  @doc """
+  Determine the priority of a query as a priority "bucket" atom.
+  """
   @spec query_priority(Tornex.Query.t()) :: :user_request | :high_priority | :generic_request
   def query_priority(%Tornex.Query{} = query) do
     cond do

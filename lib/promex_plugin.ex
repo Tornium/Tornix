@@ -13,10 +13,15 @@
 # limitations under the License.
 
 defmodule Tornex.PromExPlugin do
+  @moduledoc """
+  PromEx plugin for Tornex to export events and metrics to Prometheus
+  """
+
   use PromEx.Plugin
 
+  @doc false
   @impl true
-  def event_metrics(opts) do
+  def event_metrics(_opts) do
     [
       Event.build(
         :tornex_api_events,
